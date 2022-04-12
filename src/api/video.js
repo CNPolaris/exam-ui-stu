@@ -1,20 +1,19 @@
 import request from '@/utils/request'
 import { getToken } from '@/utils/auth'
 
-export function getUserPaper() {
+export function getVideoLevel() {
   return request({
-    url: '/exam/paper/own',
-    method: 'post',
+    url: '/video/level',
+    method: 'get',
     headers: {
-      'Authorization': 'Bearer ' + getToken(),
-      'Content-Type': 'application/json'
+      'Authorization': 'Bearer ' + getToken()
     }
   })
 }
 
-export function getAllSubjectList() {
+export function selectVideo(id) {
   return request({
-    url: '/subject/all',
+    url: '/video/select/' + id,
     method: 'get',
     headers: {
       'Authorization': 'Bearer ' + getToken()

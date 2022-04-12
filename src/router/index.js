@@ -110,6 +110,12 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/video',
+    component: () => import('@/views/video/index'),
+    meta: { title: '视频播放' },
+    hidden: true
+  }
 ]
 
 /**

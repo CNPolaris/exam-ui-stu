@@ -36,14 +36,33 @@
       <h3 class="index-title-h3">试卷中心</h3>
       <div style="padding-left: 15px">
         <el-col v-for="(item, index) in paper" :key="index" :span="4" :offset="index > 0 ? 1 : 0">
-          <el-card v-loading="loading" :body-style="{ padding: '0px' }">
+          <el-card :body-style="{ padding: '0px' }">
             <div style="padding: 14px;">
-              <span>{{ item.name }}</span>
+              <span>{{ item.name }}</span><br>
+              <span>试卷类型：{{ item.paperType|paperTypeFormatter }}</span><br>
+              <span>题目数量：{{ item.questionCount }}  总分：{{ item.score }}</span><br>
+              <span>时间：{{ item.limitStartTime }}--{{ item.limitEndTime }}</span><br>
+              <span>建议时长: {{ item.suggectTime }}</span><br>
               <div class="bottom clearfix">
                 <router-link target="_blank" :to="{path:'/do',query:{id:item.id}}">
                   <el-button type="text" class="button">开始做题</el-button>
                 </router-link>
               </div>
+            </div>
+          </el-card>
+        </el-col>
+      </div>
+    </el-row>
+    <el-row class="app-item-contain">
+      <h3 class="index-title-h3">视频课堂</h3>
+      <div style="padding-left: 15px">
+        <el-col v-for="(item, index) in videos" :key="index" :span="4" :offset="index > 0 ? 1 : 0">
+          <el-card :body-style="{ padding: '0px' }">
+            <div style="padding: 14px" @click="$router.push({ path: '/video', query: { id: item.id }})">
+              <span>
+                {{ item.name }}
+              </span>
+              <el-image :src="item.cover" />
             </div>
           </el-card>
         </el-col>
@@ -76,7 +95,21 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import { getUserPaper } from '@/api/paper'
+import { getVideoLevel } from '@/api/video'
+
 export default {
+  filters: {
+    paperTypeFormatter(type) {
+      const paperTypeEnum = [{ key: 1, value: '固定试卷' }, { key: 4, value: '时段试卷' }]
+      for (const item of paperTypeEnum) {
+        if (item.key === type) {
+          return item.value
+        }
+      }
+      return type
+    }
+  },
   data() {
     return {
       fixedPaper: [],
@@ -85,12 +118,24 @@ export default {
       loading: false,
       taskLoading: false,
       paper: [],
-      taskList: []
+      taskList: [],
+      videos: [],
+      paperTypeEnum: [{ key: 1, value: '固定试卷' }, { key: 4, value: '时段试卷' }],
+      paperQuery: {
+        subjectId: null,
+        paperType: null
+      }
     }
   },
   created() {
-    // const _this = this
+    const _this = this
     this.loading = true
+    getUserPaper().then(re => {
+      _this.paper = re.data
+    })
+    getVideoLevel().then(re => {
+      _this.videos = re.data
+    })
     // indexApi.index().then(re => {
     //   _this.fixedPaper = re.response.fixedPaper
     //   _this.timeLimitPaper = re.response.timeLimitPaper
@@ -117,6 +162,8 @@ export default {
     ...mapGetters('enumItem', [
       'enumFormat'
     ]),
+    ...mapGetters('exam', ['subjectEnumFormat']),
+    ...mapState('exam', { subjects: state => state.subjects }),
     ...mapState('enumItem', {
       statusEnum: state => state.exam.examPaperAnswer.statusEnum,
       statusTag: state => state.exam.examPaperAnswer.statusTag

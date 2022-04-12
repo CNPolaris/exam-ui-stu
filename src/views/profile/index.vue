@@ -16,6 +16,9 @@
               <el-tab-pane label="账号" name="account">
                 <account :userInfo="userInfo" />
               </el-tab-pane>
+              <el-tab-pane label="密码管理" name="password">
+                <password />
+              </el-tab-pane>
             </el-tabs>
           </el-card>
         </el-col>
@@ -30,11 +33,12 @@ import { mapGetters } from 'vuex'
 import UserCard from './components/UserCard'
 import Timeline from './components/Timeline'
 import Account from './components/Account'
+import Password from "@/views/profile/components/Password"
 import { getInfo } from '@/api/user'
 
 export default {
   name: 'Profile',
-  components: { UserCard, Timeline, Account },
+  components: { UserCard, Timeline, Account, Password },
   data() {
     return {
       userInfo: {
