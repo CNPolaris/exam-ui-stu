@@ -3,8 +3,8 @@
     <el-header height="61" class="student-header">
       <div class="head-user">
         <el-dropdown trigger="click" placement="bottom">
-          <el-badge :is-dot="messageCount!==0" >
-            <el-avatar class="el-dropdown-avatar" size="medium" :src="userInfo.imagePath === null ? require('@/assets/avatar.png') : userInfo.imagePath"></el-avatar>
+          <el-badge :is-dot="messageCount!==0">
+            <el-avatar class="el-dropdown-avatar" size="medium" :src="userInfo.avatar === null ? require('@/assets/avatar.png') : userInfo.avatar" />
           </el-badge>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="$router.push({path:'/profile/index'})">个人中心</el-dropdown-item>
@@ -19,7 +19,7 @@
         </el-dropdown>
       </div>
       <el-menu class="el-menu-title" mode="horizontal" :default-active="defaultUrl" :router="true">
-        <el-menu-item index="/">首页</el-menu-item>
+        <el-menu-item index="/index">首页</el-menu-item>
         <el-menu-item index="/paper/index">试卷中心</el-menu-item>
         <el-menu-item index="/record/index">考试记录</el-menu-item>
         <el-menu-item index="/question/index">错题本</el-menu-item>
@@ -33,7 +33,7 @@
 
 <script>
 import ResizeMixin from './mixin/ResizeHandler'
-import { mapActions, mapMutations, mapState } from 'vuex'
+import { getInfo } from '@/api/user'
 
 export default {
   name: 'Layout',
@@ -42,8 +42,9 @@ export default {
     return {
       defaultUrl: '/',
       userInfo: {
-        imagePath: null
-      }
+        avatar: null
+      },
+      messageCount: 0
     }
   },
   watch: {
@@ -51,7 +52,16 @@ export default {
       this.defaultUrl = this.routeSelect(to.path)
     }
   },
+  created() {
+    this.getUser()
+  },
   methods: {
+    getUser() {
+      const _this = this
+      getInfo().then(response => {
+        _this.userInfo = response.data
+      })
+    },
     routeSelect(path) {
       const topPath = ['/', '/index', '/paper/index', '/record/index', '/question/index']
       if (topPath.indexOf(path)) {
@@ -62,15 +72,16 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-    },
-    ...mapActions('user', ['getUserMessageInfo']),
-    ...mapMutations('user', ['clearLogin'])
-  },
-  computed: {
-    ...mapState('user', {
-      messageCount: state => state.messageCount
-    })
+    }
+
+    // ...mapActions('user', ['getUserMessageInfo']),
+    // ...mapMutations('user', ['clearLogin'])
   }
+  // computed: {
+  //   ...mapState('user', {
+  //     messageCount: state => state.messageCount
+  //   })
+  // }
 }
 </script>
 

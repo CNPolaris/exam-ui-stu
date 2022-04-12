@@ -31,3 +31,27 @@ export function logout() {
     }
   })
 }
+
+export function updateUser(query) {
+  return request({
+    url: '/user/update',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    },
+    data: query
+  })
+}
+
+export function uploadAvatar(url) {
+  return request({
+    url: '/user/uploadAvatar',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    },
+    data: url
+  })
+}

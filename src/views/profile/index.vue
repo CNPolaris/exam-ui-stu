@@ -1,23 +1,20 @@
 <template>
   <div class="app-container">
-    <div v-if="user">
+    <div>
       <el-row :gutter="20">
 
         <el-col :span="6" :xs="24">
-          <user-card :user="user" />
+          <user-card :user-info="userInfo" />
         </el-col>
 
         <el-col :span="18" :xs="24">
           <el-card>
-            <el-tabs v-model="activeTab">
-              <el-tab-pane label="Activity" name="activity">
-                <activity />
+            <el-tabs active-name="timeline">
+              <el-tab-pane label="时间线" name="timeline">
+                <timeline :loginLog="loginLog" />
               </el-tab-pane>
-              <el-tab-pane label="Timeline" name="timeline">
-                <timeline />
-              </el-tab-pane>
-              <el-tab-pane label="Account" name="account">
-                <account :user="user" />
+              <el-tab-pane label="账号" name="account">
+                <account :userInfo="userInfo" />
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -31,17 +28,24 @@
 <script>
 import { mapGetters } from 'vuex'
 import UserCard from './components/UserCard'
-import Activity from './components/Activity'
 import Timeline from './components/Timeline'
 import Account from './components/Account'
+import { getInfo } from '@/api/user'
 
 export default {
   name: 'Profile',
-  components: { UserCard, Activity, Timeline, Account },
+  components: { UserCard, Timeline, Account },
   data() {
     return {
-      user: {},
-      activeTab: 'activity'
+      userInfo: {
+        realName: '',
+        phone: '',
+        lastActiveTime: '',
+        createTime: '',
+        role: '1',
+        avatar: null
+      },
+      loginLog: null
     }
   },
   computed: {
@@ -53,15 +57,14 @@ export default {
   },
   created() {
     this.getUser()
+    this.getLoginLog()
   },
   methods: {
     getUser() {
-      this.user = {
-        name: this.name,
-        role: this.roles.join(' | '),
-        email: 'admin@test.com',
-        avatar: this.avatar
-      }
+      const _this = this
+      getInfo().then(response => {
+        _this.userInfo = response.data
+      })
     }
   }
 }

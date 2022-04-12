@@ -6,8 +6,8 @@ const state = {
   token: getToken(),
   name: '',
   avatar: '',
-  introduction: '',
-  roles: []
+  roles: [],
+  roleId: ''
 }
 
 const mutations = {
@@ -25,6 +25,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_ROLEID: (state, roleId) => {
+    state.roleId = roleId
   }
 }
 
@@ -36,6 +39,7 @@ const actions = {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token)
+        console.log('设置token成功')
         setToken(data.token)
         resolve()
       }).catch(error => {
@@ -47,24 +51,16 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      getInfo().then(response => {
+        if (response.code === 1000) {
+          reject('验证数据失败，请重新登录')
+        }
         const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
-
-        const { roles, name, avatar, introduction } = data
-
-        // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
-        }
-
+        const { roles, username, avatar, roleId } = data
         commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
+        commit('SET_ROLEID', roleId)
+        commit('SET_NAME', username)
         commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -78,6 +74,7 @@ const actions = {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
+        commit('SET_ROLEID', '')
         removeToken()
         resetRouter()
 

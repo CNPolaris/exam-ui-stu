@@ -53,6 +53,7 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
+    title: '登陆',
     hidden: true
   },
   {
@@ -73,13 +74,13 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/index',
     children: [
       {
-        path: 'dashboard',
+        path: 'index',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        meta: { title: '首页', icon: 'dashboard' }
       }
     ]
   },
@@ -93,10 +94,22 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/profile/index'),
         name: 'Profile',
-        meta: { title: 'Profile', icon: 'user', noCache: true }
+        meta: { title: '个人中心', icon: 'user', noCache: true }
       }
     ]
-  }
+  },
+  {
+    path: '/paper',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/paper/index'),
+        name: 'PaperIndex',
+        meta: { title: '试卷中心' }
+      }
+    ]
+  },
 ]
 
 /**

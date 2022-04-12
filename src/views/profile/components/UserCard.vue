@@ -1,74 +1,151 @@
 <template>
   <el-card style="margin-bottom:20px;">
-    <div slot="header" class="clearfix">
-      <span>About me</span>
+    <div slot="header" className="clearfix">
+      <span>关于我</span>
     </div>
 
-    <div class="user-profile">
-      <div class="box-center">
-        <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
-          <div>Hello</div>
-          {{ user.role }}
-        </pan-thumb>
+    <div className="user-profile">
+      <div className="box-center" @click="handleShow">
+        <img
+          :src="userInfo.avatar"
+          height="100px"
+          width="100px"
+          style="border-radius: 50px"
+        >
       </div>
-      <div class="box-center">
-        <div class="user-name text-center">{{ user.name }}</div>
-        <div class="user-role text-center text-muted">{{ user.role | uppercaseFirst }}</div>
+      <div className="box-center">
+        <div className="user-name text-center">{{ userInfo.userName }}</div>
+        <div className="user-role text-center text-muted">{{ enumFormat(roleEnum, userInfo.role) }}</div>
       </div>
     </div>
 
-    <div class="user-bio">
-      <div class="user-education user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>Education</span></div>
-        <div class="user-bio-section-body">
-          <div class="text-muted">
-            JS in Computer Science from the University of Technology
+    <div className="user-bio">
+      <div className="user-education user-bio-section">
+        <div className="user-bio-section-header">
+          <svg-icon icon-class="education" />
+          <span>个人简介</span></div>
+        <div className="user-bio-section-body">
+          <div className="text-muted">
+            无
           </div>
         </div>
       </div>
-
-      <div class="user-skills user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>Skills</span></div>
-        <div class="user-bio-section-body">
-          <div class="progress-item">
-            <span>Vue</span>
-            <el-progress :percentage="70" />
-          </div>
-          <div class="progress-item">
-            <span>JavaScript</span>
-            <el-progress :percentage="18" />
-          </div>
-          <div class="progress-item">
-            <span>Css</span>
-            <el-progress :percentage="12" />
-          </div>
-          <div class="progress-item">
-            <span>ESLint</span>
-            <el-progress :percentage="100" status="success" />
-          </div>
-        </div>
-      </div>
+      <el-dialog
+        title="上传头像"
+        :visible.sync="uploadDialogVisible"
+        width="45%"
+        :before-close="handleClose"
+      >
+        <el-upload
+          class="avatar-uploader"
+          action="https://www.tuchuangs.com/upload/localhost"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <img v-if="tempAvatar" :src="tempAvatar" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-dialog>
     </div>
   </el-card>
 </template>
 
 <script>
-import PanThumb from '@/components/PanThumb'
+import { mapGetters, mapState, mapActions } from 'vuex'
+import { uploadAvatar } from '@/api/user'
 
 export default {
-  components: { PanThumb },
   props: {
-    user: {
+    userInfo: {
       type: Object,
       default: () => {
         return {
-          name: '',
-          email: '',
-          avatar: '',
-          role: ''
+          realName: '',
+          userName: '',
+          role: '',
+          avatar: null
         }
       }
     }
+  },
+  data() {
+    return {
+      uploadDialogVisible: false,
+      tempAvatar: null,
+      imagecropperShow: false
+    }
+  },
+  methods: {
+    handleShow() {
+      this.tempAvatar = this.userInfo.avatar
+      this.uploadDialogVisible = true
+    },
+    handleClose() {
+      this.tempAvatar = null
+      this.uploadDialogVisible = false
+    },
+    handleUpload() {
+      uploadAvatar(this.tempAvatar).then(re => {
+        this.userInfo.avatar = re.data
+        this.uploadDialogVisible = false
+      })
+    },
+    handleAvatarSuccess(res, file) {
+      const { response } = file
+      if (response.code === 200) {
+        this.userInfo.avatar = response.url
+        uploadAvatar(response.url).then(re => {
+          if (re.code === 2000) {
+            this.$notify({
+              title: '成功',
+              message: re.message,
+              type: 'success',
+              duration: 2000
+            })
+            this.getInfo
+          }
+        })
+        this.uploadDialogVisible = false
+      } else {
+        this.$notify({
+          title: '失败',
+          message: '上传失败',
+          type: 'error',
+          duration: 2000
+        })
+      }
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$notify({
+          title: '失败',
+          message: '上传头像图片只能是 JPG 格式!',
+          type: 'error',
+          duration: 2000
+        })
+      }
+      if (!isLt2M) {
+        this.$notify({
+          title: '失败',
+          message: '上传头像图片大小不能超过 2MB!',
+          type: 'error',
+          duration: 2000
+        })
+      }
+      return isJPG && isLt2M
+    },
+    ...mapActions('user', ['getInfo'])
+  },
+  computed: {
+    ...mapGetters('enumItem', [
+      'enumFormat'
+    ]),
+    ...mapState('enumItem', {
+      roleEnum: state => state.user.roleEnum
+    })
   }
 }
 </script>
@@ -129,6 +206,29 @@ export default {
       margin-bottom: 10px;
       font-weight: bold;
     }
+  }
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
   }
 }
 </style>
