@@ -32,3 +32,25 @@ export function getTaskPaper() {
     }
   })
 }
+
+export function selectExamPaper(id) {
+  return request({
+    url: '/exam/select/' + id,
+    headers: {
+      'Authorization': 'Bearer ' + getToken()
+    },
+    method: 'get'
+  })
+}
+
+export function answerSubmit(data) {
+  return request({
+    url: '/exam/answer/submit',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    },
+    data: data
+  })
+}

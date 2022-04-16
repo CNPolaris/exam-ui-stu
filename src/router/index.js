@@ -115,6 +115,12 @@ export const constantRoutes = [
     component: () => import('@/views/video/index'),
     meta: { title: '视频播放' },
     hidden: true
+  },
+  {
+    path: '/exam/do',
+    component: () => import('@/views/exam/do'),
+    meta: { title: '考试' },
+    hidden: true
   }
 ]
 

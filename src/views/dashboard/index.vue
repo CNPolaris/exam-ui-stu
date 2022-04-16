@@ -16,7 +16,7 @@
                   </el-tag>
                 </td>
                 <td width="80px">
-                  <router-link v-if="paperItem.status === null" target="_blank" :to="{path:'/do',query:{id:paperItem.examPaperId}}">
+                  <router-link v-if="paperItem.status === null" target="_blank" :to="{path:'/exam/do',query:{id:paperItem.examPaperId}}">
                     <el-button type="text" size="small">开始答题</el-button>
                   </router-link>
                   <router-link v-else-if="paperItem.status === 1" target="_blank" :to="{path:'/edit',query:{id:paperItem.examPaperAnswerId}}">
@@ -44,7 +44,7 @@
               <span>时间：{{ item.limitStartTime }}--{{ item.limitEndTime }}</span><br>
               <span>建议时长: {{ item.suggectTime }}</span><br>
               <div class="bottom clearfix">
-                <router-link target="_blank" :to="{path:'/do',query:{id:item.id}}">
+                <router-link target="_blank" :to="{path:'/exam/do',query:{id:item.id}}">
                   <el-button type="text" class="button">开始做题</el-button>
                 </router-link>
               </div>
