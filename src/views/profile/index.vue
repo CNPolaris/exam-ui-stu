@@ -11,7 +11,7 @@
           <el-card>
             <el-tabs active-name="timeline">
               <el-tab-pane label="账号" name="account">
-                <account :userInfo="userInfo" />
+                <account :user-info="userInfo" />
               </el-tab-pane>
               <el-tab-pane label="密码管理" name="password">
                 <password />

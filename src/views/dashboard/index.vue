@@ -68,34 +68,12 @@
         </el-col>
       </div>
     </el-row>
-    <el-row class="app-item-contain">
-      <h3 class="index-title-h3" style="border-left: solid 10px rgb(220, 208, 65);">时段试卷</h3>
-      <div style="padding-left: 15px">
-        <el-col v-for="(item, index) in timeLimitPaper" :key="index" :span="4" :offset="index > 0 ? 1 : 0">
-          <el-card v-loading="loading" :body-style="{ padding: '0px' }">
-            <div style="padding: 14px;">
-              <span>{{ item.name }}</span>
-              <p class="index-limit-paper-time">
-                <span>{{ item.startTime }}</span>
-                <br>
-                <span>{{ item.endTime }}</span>
-              </p>
-              <div class="bottom clearfix">
-                <router-link target="_blank" :to="{path:'/do',query:{id:item.id}}">
-                  <el-button type="text" class="button">开始做题</el-button>
-                </router-link>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-      </div>
-    </el-row>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import { getUserPaper } from '@/api/paper'
+import { getUserPaper, getTaskPaper } from '@/api/paper'
 import { getVideoLevel } from '@/api/video'
 
 export default {
@@ -136,18 +114,9 @@ export default {
     getVideoLevel().then(re => {
       _this.videos = re.data
     })
-    // indexApi.index().then(re => {
-    //   _this.fixedPaper = re.response.fixedPaper
-    //   _this.timeLimitPaper = re.response.timeLimitPaper
-    //   _this.pushPaper = re.response.pushPaper
-    //   _this.loading = false
-    // })
-    //
-    // this.taskLoading = true
-    // indexApi.task().then(re => {
-    //   _this.taskList = re.response
-    //   _this.taskLoading = false
-    // })
+    getTaskPaper().then(re => {
+      _this.taskList = re.data
+    })
   },
   methods: {
     statusTagFormatter(status) {

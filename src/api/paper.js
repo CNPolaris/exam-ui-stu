@@ -21,3 +21,14 @@ export function getAllSubjectList() {
     }
   })
 }
+
+export function getTaskPaper() {
+  return request({
+    url: '/exam/paper/task',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    }
+  })
+}
