@@ -10,9 +10,6 @@
         <el-col :span="18" :xs="24">
           <el-card>
             <el-tabs active-name="timeline">
-              <el-tab-pane label="时间线" name="timeline">
-                <timeline :loginLog="loginLog" />
-              </el-tab-pane>
               <el-tab-pane label="账号" name="account">
                 <account :userInfo="userInfo" />
               </el-tab-pane>
@@ -31,14 +28,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import UserCard from './components/UserCard'
-import Timeline from './components/Timeline'
 import Account from './components/Account'
-import Password from "@/views/profile/components/Password"
+import Password from '@/views/profile/components/Password'
 import { getInfo } from '@/api/user'
 
 export default {
   name: 'Profile',
-  components: { UserCard, Timeline, Account, Password },
+  components: { UserCard, Account, Password },
   data() {
     return {
       userInfo: {
@@ -61,7 +57,6 @@ export default {
   },
   created() {
     this.getUser()
-    this.getLoginLog()
   },
   methods: {
     getUser() {

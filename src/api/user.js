@@ -55,3 +55,15 @@ export function uploadAvatar(url) {
     data: url
   })
 }
+
+export function updatePassword(data) {
+  return request({
+    url: '/user/password/edit',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    },
+    data: data
+  })
+}
