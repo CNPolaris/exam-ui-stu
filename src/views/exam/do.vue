@@ -64,7 +64,7 @@
 import { mapState, mapGetters } from 'vuex'
 import { formatSeconds } from '@/utils'
 import QuestionEdit from '@/views/exam/components/QuestionEdit'
-import { doingPaper, answerSubmit } from '@/api/paper'
+import { doingPaper, answerSubmit, setAnswer } from '@/api/paper'
 
 export default {
   components: { QuestionEdit },
@@ -96,7 +96,7 @@ export default {
     }
   },
   mounted() {
-
+    this.timer = setInterval(this.handleSetAnswer, 1000 * 60 * 5)
   },
   beforeDestroy() {
     window.clearInterval(this.timer)
@@ -132,6 +132,16 @@ export default {
           this.answer.answerItems.push({ questionId: question.id, content: null, contentArray: [], completed: false, itemOrder: question.itemOrder })
         }
       }
+    },
+    handleSetAnswer() {
+      setAnswer(this.answer).then(re => {
+        this.$notify({
+          title: '成功',
+          message: re.message,
+          type: 'success',
+          duration: 2000
+        })
+      })
     },
     submitForm() {
       const _this = this

@@ -55,6 +55,29 @@ export function answerSubmit(data) {
   })
 }
 
+export function setAnswer(data) {
+  return request({
+    url: '/exam/answer/set',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    },
+    data: data
+  })
+}
+
+export function getAnswer(id) {
+  return request({
+    url: '/exam/answer/get/' + id,
+    method: 'get',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    }
+  })
+}
+
 export function doingPaper(id) {
   return request({
     url: '/exam/do/' + id,
