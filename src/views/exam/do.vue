@@ -64,7 +64,7 @@
 import { mapState, mapGetters } from 'vuex'
 import { formatSeconds } from '@/utils'
 import QuestionEdit from '@/views/exam/components/QuestionEdit'
-import { selectExamPaper, answerSubmit } from '@/api/paper'
+import { doingPaper, answerSubmit } from '@/api/paper'
 
 export default {
   components: { QuestionEdit },
@@ -86,7 +86,7 @@ export default {
     const _this = this
     if (id && parseInt(id) !== 0) {
       _this.formLoading = true
-      selectExamPaper(id).then(re => {
+      doingPaper(id).then(re => {
         _this.form = re.data
         _this.remainTime = re.data.suggestTime * 60
         _this.initAnswer()

@@ -54,3 +54,14 @@ export function answerSubmit(data) {
     data: data
   })
 }
+
+export function doingPaper(id) {
+  return request({
+    url: '/exam/do/' + id,
+    method: 'get',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    }
+  })
+}
