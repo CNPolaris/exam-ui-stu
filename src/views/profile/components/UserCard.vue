@@ -38,10 +38,12 @@
       >
         <el-upload
           class="avatar-uploader"
-          action="https://www.tuchuangs.com/upload/localhost"
+          :headers="headers"
+          action="/api/image/upload"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
+          :before-upload="beforeAvatarUpload"
+        >
           <img v-if="tempAvatar" :src="tempAvatar" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
@@ -53,6 +55,7 @@
 <script>
 import { mapGetters, mapState, mapActions } from 'vuex'
 import { uploadAvatar } from '@/api/user'
+import { getToken } from '@/utils/auth'
 
 export default {
   props: {
@@ -70,6 +73,9 @@ export default {
   },
   data() {
     return {
+      headers: {
+        Authorization: 'Bearer ' + getToken()
+      },
       uploadDialogVisible: false,
       tempAvatar: null,
       imagecropperShow: false
@@ -92,9 +98,10 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       const { response } = file
-      if (response.code === 200) {
-        this.userInfo.avatar = response.url
-        uploadAvatar(response.url).then(re => {
+      console.log(file)
+      if (response.code === 2000) {
+        this.userInfo.avatar = response.data
+        uploadAvatar(response.data).then(re => {
           if (re.code === 2000) {
             this.$notify({
               title: '成功',
