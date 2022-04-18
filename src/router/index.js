@@ -133,6 +133,30 @@ export const constantRoutes = [
         hidden: true
       }
     ]
+  },
+  {
+    path: '/answer/read',
+    component: () => import('@/views/exam/read'),
+    meta: { title: '查看答卷' },
+    hidden: true
+  },
+  {
+    path: '/answer/edit',
+    component: () => import('@/views/exam/edit'),
+    meta: { title: '阅卷' },
+    hidden: true
+  },
+  {
+    path: '/question',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/question/index'),
+        meta: { title: '错题' },
+        hidden: true
+      }
+    ]
   }
 ]
 

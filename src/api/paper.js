@@ -100,3 +100,49 @@ export function getRecordList(data) {
     data: data
   })
 }
+
+export function readExamPaper(id) {
+  return request({
+    url: '/exam/answer/read/' + id,
+    method: 'get',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    }
+  })
+}
+
+export function editExamPaper(data) {
+  return request({
+    url: '/exam/answer/edit',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    },
+    data: data
+  })
+}
+
+export function getFalseQuestion(data) {
+  return request({
+    url: '/question/student/false',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    },
+    data: data
+  })
+}
+
+export function questionSelect(id) {
+  return request({
+    url: '/question/answer/select/' + id,
+    method: 'get',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    }
+  })
+}

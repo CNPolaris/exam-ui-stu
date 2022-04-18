@@ -24,7 +24,6 @@
         <el-menu-item index="/record/index">考试记录</el-menu-item>
         <el-menu-item index="/question/index">错题本</el-menu-item>
         <el-menu-item index="/video/index">视频中心</el-menu-item>
-        <el-menu-item index="/exam/index">训练中心</el-menu-item>
       </el-menu>
     </el-header>
     <el-main class="student-main">
