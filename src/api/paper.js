@@ -88,3 +88,15 @@ export function doingPaper(id) {
     }
   })
 }
+
+export function getRecordList(data) {
+  return request({
+    url: '/exam/answer/judge/list',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    },
+    data: data
+  })
+}

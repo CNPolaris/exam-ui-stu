@@ -164,6 +164,7 @@ export default {
       })
     }
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
     ...mapGetters('enumItem', ['enumFormat']),
     ...mapState('enumItem', {

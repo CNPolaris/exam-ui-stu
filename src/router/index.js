@@ -121,6 +121,18 @@ export const constantRoutes = [
     component: () => import('@/views/exam/do'),
     meta: { title: '考试' },
     hidden: true
+  },
+  {
+    path: '/record',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/exam/record'),
+        meta: { title: '考试记录' },
+        hidden: true
+      }
+    ]
   }
 ]
 
