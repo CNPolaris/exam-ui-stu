@@ -91,7 +91,7 @@ export function doingPaper(id) {
 
 export function getRecordList(data) {
   return request({
-    url: '/exam/answer/judge/list',
+    url: '/exam/answer/record/list',
     method: 'post',
     headers: {
       'Authorization': 'Bearer ' + getToken(),
