@@ -58,11 +58,13 @@
       <div style="padding-left: 15px">
         <el-col v-for="(item, index) in videos" :key="index" :span="4" :offset="index > 0 ? 1 : 0">
           <el-card :body-style="{ padding: '0px' }">
-            <div style="padding: 14px" @click="$router.push({ path: '/video', query: { id: item.id }})">
-              <span>
-                {{ item.name }}
-              </span>
-              <el-image :src="item.cover" />
+            <div style="padding: 14px" @click="$router.push({ path: '/video/preview', query: { id: item.id }})">
+              <el-row>
+                <el-image :src="item.cover" />
+              </el-row>
+              <el-row>
+                <span>{{ item.name }}</span>
+              </el-row>
             </div>
           </el-card>
         </el-col>

@@ -38,6 +38,7 @@ import { getFalseQuestion, questionSelect } from '@/api/paper'
 import QuestionAnswerShow from '../exam/components/QuestionAnswerShow'
 
 export default {
+  name: 'QuestionIndex',
   components: { Pagination, QuestionAnswerShow },
   data() {
     return {

@@ -3,7 +3,7 @@ import { getToken } from '@/utils/auth'
 
 export function getVideoLevel() {
   return request({
-    url: '/video/level',
+    url: '/student/video/level',
     method: 'get',
     headers: {
       'Authorization': 'Bearer ' + getToken()
@@ -13,10 +13,22 @@ export function getVideoLevel() {
 
 export function selectVideo(id) {
   return request({
-    url: '/video/select/' + id,
+    url: '/student/video/select/' + id,
     method: 'get',
     headers: {
       'Authorization': 'Bearer ' + getToken()
     }
+  })
+}
+
+export function getVideoList(data) {
+  return request({
+    url: '/student/video/list',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    },
+    data: data
   })
 }

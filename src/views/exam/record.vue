@@ -56,6 +56,7 @@ import { getRecordList } from '@/api/paper'
 import { scrollTo } from '@/utils/scroll-to'
 import { formatDate } from '@/utils'
 export default {
+  name: 'Record',
   components: { Pagination },
   filters: {
     formatDateTime(time) {

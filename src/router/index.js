@@ -112,12 +112,27 @@ export const constantRoutes = [
   },
   {
     path: '/video',
-    component: () => import('@/views/video/index'),
-    meta: { title: '视频播放' },
-    hidden: true
+    component: Layout,
+    meta: { title: '视频中心' },
+    children: [
+      {
+        path: '/video/index',
+        name: 'ViewIndex',
+        component: () => import('@/views/video/index'),
+        meta: { title: '视频列表' }
+      },
+      {
+        path: '/video/preview',
+        name: 'PreviewVideo',
+        component: () => import('@/views/video/preview'),
+        meta: { title: '视频播放' },
+        hidden: true
+      }
+    ]
   },
   {
     path: '/exam/do',
+    name: 'DoExam',
     component: () => import('@/views/exam/do'),
     meta: { title: '考试' },
     hidden: true
@@ -128,6 +143,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
+        name: 'Record',
         component: () => import('@/views/exam/record'),
         meta: { title: '考试记录' },
         hidden: true
@@ -152,6 +168,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
+        name: 'QuestionIndex',
         component: () => import('@/views/question/index'),
         meta: { title: '错题' },
         hidden: true

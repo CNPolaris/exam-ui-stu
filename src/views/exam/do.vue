@@ -67,6 +67,7 @@ import QuestionEdit from '@/views/exam/components/QuestionEdit'
 import { doingPaper, answerSubmit, setAnswer } from '@/api/paper'
 
 export default {
+  name: 'DoExam',
   components: { QuestionEdit },
   data() {
     return {
