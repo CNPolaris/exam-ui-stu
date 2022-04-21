@@ -126,7 +126,7 @@ export function editExamPaper(data) {
 
 export function getFalseQuestion(data) {
   return request({
-    url: '/student/question/student/false',
+    url: '/student/question/false/list',
     method: 'post',
     headers: {
       'Authorization': 'Bearer ' + getToken(),

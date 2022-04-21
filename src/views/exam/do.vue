@@ -51,7 +51,13 @@
             </el-card>
           </el-row>
           <el-row class="do-align-center">
-            <el-button type="primary" @click="submitForm">提交</el-button>
+            <el-popconfirm
+              v-model="visible"
+              title="是否确认交卷?"
+              @onConfirm="submitForm"
+            >
+              <el-button type="primary">提交</el-button>
+            </el-popconfirm>
             <el-button>取消</el-button>
           </el-row>
         </el-form>
@@ -73,6 +79,7 @@ export default {
     return {
       form: {},
       formLoading: false,
+      visible: false,
       answer: {
         questionId: null,
         doTime: 0,
@@ -149,7 +156,7 @@ export default {
       window.clearInterval(_this.timer)
       _this.formLoading = true
       answerSubmit(this.answer).then(re => {
-        if (re.code === 1) {
+        if (re.code === 2000) {
           _this.$alert('试卷得分：' + re.data + '分', '考试结果', {
             confirmButtonText: '返回考试记录',
             callback: action => {

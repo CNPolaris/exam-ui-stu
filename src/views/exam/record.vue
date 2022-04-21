@@ -26,11 +26,11 @@
           </el-table-column>
           <el-table-column align="right" width="70" label="操作">
             <template slot-scope="{row}">
-              <router-link v-if="row.status === 1 " target="_blank" :to="{path:'/answer/edit',query:{id:row.id}}">
-                <el-button type="text" size="small">批改</el-button>
+              <router-link v-if="row.status === 0 " target="_blank" :to="{path:'/answer/edit',query:{id:row.id}}">
+                <el-button type="primary" size="small">批改</el-button>
               </router-link>
-              <router-link v-if="row.status === 0 " target="_blank" :to="{path:'/answer/read',query:{id:row.id}}">
-                <el-button type="text" size="small">查看试卷</el-button>
+              <router-link v-if="row.status === 1 " target="_blank" :to="{path:'/answer/read',query:{id:row.id}}">
+                <el-button type="primary" size="small">查看试卷</el-button>
               </router-link>
             </template>
           </el-table-column>
