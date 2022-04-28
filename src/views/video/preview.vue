@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-form>
-      <el-form-item>
-        <el-button type="primary" @click="$router.push('/video/index')">退出</el-button>
-      </el-form-item>
+      <!--      <el-form-item>-->
+      <!--        <el-button type="primary" @click="$router.push('/video/index')">退出</el-button>-->
+      <!--      </el-form-item>-->
       <el-form-item>
         <video controls :src="url" width="400" />
       </el-form-item>

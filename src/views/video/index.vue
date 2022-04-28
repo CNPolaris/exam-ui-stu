@@ -17,22 +17,41 @@
     </el-row>
     <el-row class="app-item-contain">
       <h3>视频课堂</h3>
-      <div class="video-page-contain">
-        <el-col v-for="(item, index) in list" :key="index" :span="4">
-          <el-card :body-style="{ padding: '0px' }">
-            <div class="video-card-content">
-              <div style="display: flex; justify-content: center">
-                <el-image :src="item.cover" />
-              </div>
-              <div style="margin-top: 10px">
-                {{ item.name }}
-              </div>
-              <div class="font-desc" style="margin-top: 10px">
-                学科：{{ item.subject }}
-              </div>
+      <div class="index-contain video-page-contain">
+        <el-card v-for="(item, index) in list" :key="index" class="video-card">
+          <div class="video-card-content">
+            <div style="display: flex; justify-content: center">
+              <a :href="'#/video/preview?id=' + item.id">
+                <img :src="item.cover" class="video-image" alt="视频封面">
+              </a>
             </div>
-          </el-card>
-        </el-col>
+            <div class="video-name" style="margin-top: 10px;">
+              {{ item.name }}
+            </div>
+            <div class="exam-line" style="margin-top: 10px;" />
+            <div class="font-desc">学科：{{ item.subject }}</div>
+            <div style="text-align: center">
+              <router-link target="_blank" :to="{ path: '/video/preview', query: { id: item.id }}">
+                <el-button type="text" size="small">开始观看</el-button>
+              </router-link>
+            </div>
+          </div>
+        </el-card>
+<!--        <el-col v-for="(item, index) in list" :key="index" :span="4">-->
+<!--          <el-card :body-style="{ padding: '0px' }">-->
+<!--            <div class="video-card-content">-->
+<!--              <div style="display: flex; justify-content: center">-->
+<!--                <el-image :src="item.cover" />-->
+<!--              </div>-->
+<!--              <div style="margin-top: 10px">-->
+<!--                {{ item.name }}-->
+<!--              </div>-->
+<!--              <div class="font-desc" style="margin-top: 10px">-->
+<!--                学科：{{ item.subject }}-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </el-card>-->
+<!--        </el-col>-->
       </div>
       <pagination
         v-show="total>0"
@@ -91,15 +110,6 @@ export default {
         _this.list = re.data.list
       })
     },
-    subjectFormatter(key) {
-      const _this = this
-      for (let i = 0; i < _this.subjects.length; i++) {
-        if (_this.subjectFilter[i].id === key) {
-          return _this.subjectFilter[i].name
-        }
-      }
-      return null
-    },
     ...mapActions('exam', { initSubject: 'initSubject' })
   }
 }
@@ -117,5 +127,29 @@ video {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+.index-contain {
+  padding-left: 15px;
+  min-height: 300px;
+}
+.video-card {
+  height: 320px;
+  width: 245px;
+  margin: 0 30px 30px 0;
+}
+.video-image {
+  width: 220px;
+  height: 190px;
+  cursor: pointer;
+}
+.video-page-contain .video-card .video-card-content .video-name {
+  font-size: 14px;
+}
+.exam-line {
+  border-bottom: 1px solid #ebeef5;
+}
+.font-desc {
+  font-size: 14px;
+  color: #9b9b9b;
 }
 </style>
