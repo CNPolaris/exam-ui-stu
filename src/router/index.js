@@ -94,7 +94,15 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/profile/index'),
         name: 'Profile',
-        meta: { title: '个人中心', icon: 'user', noCache: true }
+        meta: { title: '个人中心', icon: 'user', noCache: false }
+      },
+      {
+        path: '/profile/score/analysis',
+        component: () => import('@/views/exam/result/statistics'),
+        name: 'Statistics',
+        meta: {
+          title: '成绩分析'
+        }
       }
     ]
   },
