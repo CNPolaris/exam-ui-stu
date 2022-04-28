@@ -133,7 +133,7 @@ export const constantRoutes = [
   {
     path: '/exam/do',
     name: 'DoExam',
-    component: () => import('@/views/exam/do'),
+    component: () => import('@/views/exam/paper/do'),
     meta: { title: '考试' },
     hidden: true
   },
@@ -144,7 +144,7 @@ export const constantRoutes = [
       {
         path: 'index',
         name: 'Record',
-        component: () => import('@/views/exam/record'),
+        component: () => import('@/views/exam/answer/record'),
         meta: { title: '考试记录' },
         hidden: true
       }
@@ -152,13 +152,13 @@ export const constantRoutes = [
   },
   {
     path: '/answer/read',
-    component: () => import('@/views/exam/read'),
+    component: () => import('@/views/exam/answer/read'),
     meta: { title: '查看答卷' },
     hidden: true
   },
   {
     path: '/answer/edit',
-    component: () => import('@/views/exam/edit'),
+    component: () => import('@/views/exam/paper/edit'),
     meta: { title: '阅卷' },
     hidden: true
   },
