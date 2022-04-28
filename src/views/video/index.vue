@@ -37,21 +37,21 @@
             </div>
           </div>
         </el-card>
-<!--        <el-col v-for="(item, index) in list" :key="index" :span="4">-->
-<!--          <el-card :body-style="{ padding: '0px' }">-->
-<!--            <div class="video-card-content">-->
-<!--              <div style="display: flex; justify-content: center">-->
-<!--                <el-image :src="item.cover" />-->
-<!--              </div>-->
-<!--              <div style="margin-top: 10px">-->
-<!--                {{ item.name }}-->
-<!--              </div>-->
-<!--              <div class="font-desc" style="margin-top: 10px">-->
-<!--                学科：{{ item.subject }}-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </el-card>-->
-<!--        </el-col>-->
+        <!--        <el-col v-for="(item, index) in list" :key="index" :span="4">-->
+        <!--          <el-card :body-style="{ padding: '0px' }">-->
+        <!--            <div class="video-card-content">-->
+        <!--              <div style="display: flex; justify-content: center">-->
+        <!--                <el-image :src="item.cover" />-->
+        <!--              </div>-->
+        <!--              <div style="margin-top: 10px">-->
+        <!--                {{ item.name }}-->
+        <!--              </div>-->
+        <!--              <div class="font-desc" style="margin-top: 10px">-->
+        <!--                学科：{{ item.subject }}-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </el-card>-->
+        <!--        </el-col>-->
       </div>
       <pagination
         v-show="total>0"
