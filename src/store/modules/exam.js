@@ -8,7 +8,7 @@ const getters = {
   subjectEnumFormat: (state) => (key) => {
     for (const item of state.subjects) {
       if (item.id === key) {
-        return item.name
+        return item.name + ' ( ' + item.levelName + ' )'
       }
     }
     return null

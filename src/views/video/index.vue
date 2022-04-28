@@ -5,9 +5,9 @@
         <div class="item-contain">
           <el-select v-model="queryParam.subjectId" placeholder="选择学科">
             <el-option
-              v-for="item in subjectFilter"
+              v-for="item in subjects"
               :key="item.id"
-              :label="item.name"
+              :label="item.name + ' ( ' + item.levelName + ' )'"
               :value="item.id"
             />
           </el-select>
@@ -52,7 +52,7 @@ import { getVideoList } from '@/api/video'
 import Pagination from '@/components/Pagination'
 export default {
   name: 'ViewIndex',
-  comments: { Pagination },
+  components: { Pagination },
   data() {
     return {
       list: [],
@@ -65,42 +65,6 @@ export default {
       subjectFilter: null
     }
   },
-  async created() {
-    const _this = this
-    await this.initSubject(function() {
-      _this.subjectFilter = _this.subjects
-    })
-    await this.getList()
-  },
-  methods: {
-    search() {
-      const _this = this
-      _this.getList()
-    },
-    getList() {
-      getVideoList(this.queryParam).then(re => {
-        const _this = this
-        for (let i = 0; i < re.data.list.length; i++) {
-          re.data.list[i].subject = _this.subjectFormatter(re.data.list[i].subjectId)
-        }
-        for (let i = 0; i < re.data.list.length; i++) {
-          re.data.list[i].subject = _this.subjectFormatter(re.data.list[i].subjectId)
-        }
-        _this.total = re.data.total
-        _this.list = re.data.list
-      })
-    },
-    subjectFormatter(key) {
-      const _this = this
-      for (let i = 0; i < _this.subjectFilter.length; i++) {
-        if (_this.subjectFilter[i].id === key) {
-          return _this.subjectFilter[i].name
-        }
-      }
-      return null
-    },
-    ...mapActions('exam', { initSubject: 'initSubject' })
-  },
   computed: {
     ...mapGetters('enumItem', ['enumFormat']),
     ...mapState('enumItem', {
@@ -109,6 +73,34 @@ export default {
       levelEnum: state => state.user.levelEnum
     }),
     ...mapState('exam', { subjects: state => state.subjects })
+  },
+  async created() {
+    const _this = this
+    _this.initSubject()
+    await _this.getList()
+  },
+  methods: {
+    search() {
+      const _this = this
+      _this.getList()
+    },
+    getList() {
+      const _this = this
+      getVideoList(this.queryParam).then(re => {
+        _this.total = re.data.total
+        _this.list = re.data.list
+      })
+    },
+    subjectFormatter(key) {
+      const _this = this
+      for (let i = 0; i < _this.subjects.length; i++) {
+        if (_this.subjectFilter[i].id === key) {
+          return _this.subjectFilter[i].name
+        }
+      }
+      return null
+    },
+    ...mapActions('exam', { initSubject: 'initSubject' })
   }
 }
 </script>
