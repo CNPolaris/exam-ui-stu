@@ -1,5 +1,21 @@
 <template>
   <div class="app-contain">
+    <el-form :inline="true">
+      <el-form-item label="选择学科: ">
+        <el-select v-model="queryParam.subjectId" placeholder="学科" style="width: 100px">
+          <el-option v-for="item in subjects" :key="item.id" :label="item.name" :value="item.id" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="状态：">
+        <el-select v-model="queryParam.status" placeholder="状态" style="width: 100px">
+          <el-option v-for="item in statusEnum" :key="item.key" :value="item.key" :label="item.value" />
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" size="small" @click="search">查询</el-button>
+        <el-button type="success" size="small" @click="handleClear">重置</el-button>
+      </el-form-item>
+    </el-form>
     <el-table v-loading="listLoading" :data="tableData" fit highlight-current-row style="width: 100%" @row-click="itemSelect">
       <el-table-column prop="id" label="序号" width="70px" align="center" />
       <el-table-column prop="paperName" label="名称" width="350px" align="center" />
@@ -44,7 +60,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import Pagination from '@/components/Pagination'
 import { getRecordList } from '@/api/paper'
 import { scrollTo } from '@/utils/scroll-to'
@@ -65,10 +81,14 @@ export default {
     return {
       queryParam: {
         page: 1,
-        limit: 10
+        limit: 10,
+        subjectId: null,
+        paperId: null,
+        status: null
       },
       listLoading: false,
       tableData: [],
+      subjectFilter: [],
       total: 0,
       selectItem: {
         systemScore: '0',
@@ -88,10 +108,14 @@ export default {
     ...mapState('enumItem', {
       statusEnum: state => state.exam.examPaperAnswer.statusEnum,
       statusTag: state => state.exam.examPaperAnswer.statusTag
-    })
+    }),
+    ...mapGetters('exam', ['subjectEnumFormat']),
+    ...mapState('exam', { subjects: state => state.subjects })
   },
   created() {
-    this.search()
+    const _this = this
+    _this.initSubject()
+    _this.search()
     scrollTo(0, 800)
   },
   methods: {
@@ -112,7 +136,13 @@ export default {
     },
     statusTextFormatter(status) {
       return this.enumFormat(this.statusEnum, status)
-    }
+    },
+    handleClear() {
+      this.queryParam.paperId = null
+      this.queryParam.status = null
+      this.queryParam.subjectId = null
+    },
+    ...mapActions('exam', { initSubject: 'initSubject' })
   }
 }
 </script>
