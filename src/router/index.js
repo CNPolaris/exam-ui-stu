@@ -180,6 +180,15 @@ export const constantRoutes = [
         component: () => import('@/views/question/index'),
         meta: { title: '错题' },
         hidden: true
+      },
+      {
+        path: '/question/detail',
+        name: 'QuestionDetail',
+        component: () => import('@/views/question/detail'),
+        meta: {
+          title: '答题详情'
+        },
+        hidden: true
       }
     ]
   }
