@@ -156,3 +156,15 @@ export function allSubjectList() {
     method: 'get'
   })
 }
+
+export function getStudentPaperPage(data) {
+  return request({
+    url: '/student/exam/paper/page',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    },
+    data: data
+  })
+}

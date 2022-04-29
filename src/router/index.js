@@ -112,7 +112,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/paper/index'),
+        component: () => import('@/views/exam/paper'),
         name: 'PaperIndex',
         meta: { title: '试卷中心' }
       }
