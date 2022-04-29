@@ -55,19 +55,43 @@
     </el-row>
     <el-row class="app-item-contain">
       <h3 class="index-title-h3">视频课堂</h3>
-      <div style="padding-left: 15px">
-        <el-col v-for="(item, index) in videos" :key="index" :span="4" :offset="index > 0 ? 1 : 0">
-          <el-card :body-style="{ padding: '0px' }">
-            <div style="padding: 14px" @click="$router.push({ path: '/video/preview', query: { id: item.id }})">
-              <el-row>
-                <el-image :src="item.cover" />
-              </el-row>
-              <el-row>
-                <span>{{ item.name }}</span>
-              </el-row>
+      <div class="index-contain video-page-contain">
+        <el-card v-for="(item, index) in videos" :key="index" class="video-card">
+          <div class="video-card-content" style="padding-top: 10px">
+            <div style="display: flex; justify-content: center">
+              <a :href="'#/video/preview?id=' + item.id">
+                <img :src="item.cover" class="video-image" alt="视频封面">
+              </a>
             </div>
-          </el-card>
-        </el-col>
+            <div class="video-name" style="margin-top: 10px;">
+              {{ item.name }}
+            </div>
+            <div class="exam-line" style="margin-top: 10px;" />
+            <div class="font-desc">
+              学科：{{ item.subject }}
+            </div>
+            <div style="text-align: center">
+              <router-link target="_blank" :to="{ path: '/video/preview', query: { id: item.id }}">
+                <el-button type="text" size="small">开始观看</el-button>
+              </router-link>
+            </div>
+          </div>
+        </el-card>
+        <!--        <el-col v-for="(item, index) in list" :key="index" :span="4">-->
+        <!--          <el-card :body-style="{ padding: '0px' }">-->
+        <!--            <div class="video-card-content">-->
+        <!--              <div style="display: flex; justify-content: center">-->
+        <!--                <el-image :src="item.cover" />-->
+        <!--              </div>-->
+        <!--              <div style="margin-top: 10px">-->
+        <!--                {{ item.name }}-->
+        <!--              </div>-->
+        <!--              <div class="font-desc" style="margin-top: 10px">-->
+        <!--                学科：{{ item.subject }}-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </el-card>-->
+        <!--        </el-col>-->
       </div>
     </el-row>
   </div>
@@ -193,5 +217,41 @@ export default {
 
 .clearfix:after {
   clear: both
+}
+.video {
+  width: 100%;
+  height: 500px;
+}
+.paper-index-header {
+  border-bottom: 1px dotted #d9d9d9;
+}
+.item-contain {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.index-contain {
+  padding-left: 15px;
+  min-height: 300px;
+}
+.video-card {
+  height: 320px;
+  width: 245px;
+  margin: 0 30px 30px 0;
+}
+.video-image {
+  width: 220px;
+  height: 190px;
+  cursor: pointer;
+}
+.video-page-contain .video-card .video-card-content .video-name {
+  font-size: 14px;
+}
+.exam-line {
+  border-bottom: 1px solid #ebeef5;
+}
+.font-desc {
+  font-size: 14px;
+  color: #9b9b9b;
 }
 </style>
