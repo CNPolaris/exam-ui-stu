@@ -14,10 +14,10 @@
               style="border-radius: 50px"
             >
           </div>
-<!--          <div className="box-center">-->
-<!--            <div className="user-name text-center">{{ userInfo.userName }}</div>-->
-<!--            <div className="user-role text-center text-muted">{{ enumFormat(roleEnum, userInfo.role) }}</div>-->
-<!--          </div>-->
+          <!--          <div className="box-center">-->
+          <!--            <div className="user-name text-center">{{ userInfo.userName }}</div>-->
+          <!--            <div className="user-role text-center text-muted">{{ enumFormat(roleEnum, userInfo.role) }}</div>-->
+          <!--          </div>-->
         </div>
       </el-col>
       <el-col :span="18">
@@ -50,8 +50,8 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="tempAvatar" :src="tempAvatar" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <img v-if="tempAvatar" :src="tempAvatar" class="avatar" alt="头像">
+          <i v-else class="el-icon-plus avatar-uploader-icon" />
         </el-upload>
       </el-dialog>
     </div>
@@ -87,6 +87,14 @@ export default {
       tempAvatar: null,
       imagecropperShow: false
     }
+  },
+  computed: {
+    ...mapGetters('enumItem', [
+      'enumFormat'
+    ]),
+    ...mapState('enumItem', {
+      roleEnum: state => state.user.roleEnum
+    })
   },
   methods: {
     handleShow() {
@@ -152,14 +160,6 @@ export default {
       return isJPG && isLt2M
     },
     ...mapActions('user', ['getInfo'])
-  },
-  computed: {
-    ...mapGetters('enumItem', [
-      'enumFormat'
-    ]),
-    ...mapState('enumItem', {
-      roleEnum: state => state.user.roleEnum
-    })
   }
 }
 </script>
