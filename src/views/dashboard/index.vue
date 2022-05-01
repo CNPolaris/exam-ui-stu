@@ -34,23 +34,37 @@
     </el-row>
     <el-row class="app-item-contain">
       <h3 class="index-title-h3">试卷中心</h3>
-      <div style="padding-left: 15px">
-        <el-col v-for="(item, index) in paper" :key="index" :span="4" :offset="index > 0 ? 1 : 0">
-          <el-card :body-style="{ padding: '0px' }">
-            <div style="padding: 14px;">
-              <span>{{ item.name }}</span><br>
-              <span>试卷类型：{{ item.paperType|paperTypeFormatter }}</span><br>
-              <span>题目数量：{{ item.questionCount }}  总分：{{ item.score }}</span><br>
-              <span>时间：{{ item.limitStartTime }}--{{ item.limitEndTime }}</span><br>
-              <span>建议时长: {{ item.suggectTime }}</span><br>
-              <div class="bottom clearfix">
-                <router-link target="_blank" :to="{path:'/exam/do',query:{id:item.id}}">
-                  <el-button type="text" class="button">开始做题</el-button>
-                </router-link>
-              </div>
+      <div class="index-contain exam-paper-contain" style="margin-top: 10px">
+        <el-card v-for="(item,index) in paper" :key="index" class="paper-card is-none-shadow">
+          <div class="paper-card-content">
+            <div class="font-hidden">
+              {{ item.name }}
             </div>
-          </el-card>
-        </el-col>
+            <div class="font-desc" style="margin-top: 10px">
+              学科：{{ item.subject }}
+            </div>
+            <div class="font-desc" style="margin-top: 5px">
+              题目数量: {{ item.questionCount }}
+            </div>
+            <div class="font-desc" style="margin-top: 5px">
+              试卷总分：{{ item.score }}分
+            </div>
+            <div class="font-desc" style="margin-top: 5px">
+              建议时长：{{ item.suggestTime }}分钟
+            </div>
+            <div class="font-desc" style="margin-top: 5px">
+              开始时间：{{ item.limitStartTime }}
+            </div>
+            <div class="font-desc" style="margin-top: 5px">
+              结束时间：{{ item.limitEndTime }}
+            </div>
+            <div style="margin-top: 10px; text-align: center">
+              <router-link target="_blank" :to="{path: '/exam/do', query: {id:item.id}}">
+                <el-button type="text" size="small">开始答题</el-button>
+              </router-link>
+            </div>
+          </div>
+        </el-card>
       </div>
     </el-row>
     <el-row class="app-item-contain">
@@ -77,28 +91,13 @@
             </div>
           </div>
         </el-card>
-        <!--        <el-col v-for="(item, index) in list" :key="index" :span="4">-->
-        <!--          <el-card :body-style="{ padding: '0px' }">-->
-        <!--            <div class="video-card-content">-->
-        <!--              <div style="display: flex; justify-content: center">-->
-        <!--                <el-image :src="item.cover" />-->
-        <!--              </div>-->
-        <!--              <div style="margin-top: 10px">-->
-        <!--                {{ item.name }}-->
-        <!--              </div>-->
-        <!--              <div class="font-desc" style="margin-top: 10px">-->
-        <!--                学科：{{ item.subject }}-->
-        <!--              </div>-->
-        <!--            </div>-->
-        <!--          </el-card>-->
-        <!--        </el-col>-->
       </div>
     </el-row>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import { getUserPaper, getTaskPaper } from '@/api/paper'
 import { getVideoLevel } from '@/api/video'
 
@@ -131,11 +130,26 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters('enumItem', [
+      'enumFormat'
+    ]),
+    ...mapGetters('exam', ['subjectEnumFormat']),
+    ...mapState('exam', { subjects: state => state.subjects }),
+    ...mapState('enumItem', {
+      statusEnum: state => state.exam.examPaperAnswer.statusEnum,
+      statusTag: state => state.exam.examPaperAnswer.statusTag
+    })
+  },
   created() {
     const _this = this
     this.loading = true
+    _this.initSubject()
     getUserPaper().then(re => {
       _this.paper = re.data
+      for (let i = 0; i < _this.paper.length; i++) {
+        _this.paper[i].subject = _this.subjectFormatter(_this.paper[i].subjectId)
+      }
     })
     getVideoLevel().then(re => {
       _this.videos = re.data
@@ -150,19 +164,17 @@ export default {
     },
     statusTextFormatter(status) {
       return this.enumFormat(this.statusEnum, status)
-    }
-  },
-  // eslint-disable-next-line vue/order-in-components
-  computed: {
-    ...mapGetters('enumItem', [
-      'enumFormat'
-    ]),
-    ...mapGetters('exam', ['subjectEnumFormat']),
-    ...mapState('exam', { subjects: state => state.subjects }),
-    ...mapState('enumItem', {
-      statusEnum: state => state.exam.examPaperAnswer.statusEnum,
-      statusTag: state => state.exam.examPaperAnswer.statusTag
-    })
+    },
+    subjectFormatter(id) {
+      const _this = this
+      for (let i = 0; i < _this.subjects.length; i++) {
+        if (_this.subjects[i].id === id) {
+          return _this.subjects[i].name
+        }
+      }
+      return null
+    },
+    ...mapActions('exam', { initSubject: 'initSubject' })
   }
 }
 </script>
@@ -253,5 +265,47 @@ export default {
 .font-desc {
   font-size: 14px;
   color: #9b9b9b;
+}
+.index-contain {
+  padding-left: 15px;
+  min-height: 300px;
+}
+.exam-paper-contain {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+.paper-card {
+  height: 270px;
+  width: 300px;
+  margin: 0 30px 30px 0;
+}
+.paper-card-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.font-hidden {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>

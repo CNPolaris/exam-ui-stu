@@ -35,7 +35,7 @@
 
 <script>
 import ResizeMixin from './mixin/ResizeHandler'
-import { getInfo } from '@/api/user'
+// import { getInfo } from '@/api/user'
 
 export default {
   name: 'Layout',
@@ -60,9 +60,10 @@ export default {
   methods: {
     getUser() {
       const _this = this
-      getInfo().then(response => {
-        _this.userInfo = response.data
-      })
+      // getInfo().then(response => {
+      //   _this.userInfo = response.data
+      // })
+      _this.userInfo.avatar = this.$store.getters.avatar
     },
     routeSelect(path) {
       const topPath = ['/', '/index', '/paper/index', '/record/index', '/question/index']

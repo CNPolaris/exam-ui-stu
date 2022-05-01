@@ -6,6 +6,13 @@
     <el-form-item label="手机号">
       <el-input v-model.trim="userInfo.phone" />
     </el-form-item>
+    <el-form-item label="生日">
+      <el-date-picker
+        v-model="userInfo.birthDay"
+        type="date"
+        placeholder="生日"
+      />
+    </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submit">更新</el-button>
     </el-form-item>
@@ -22,7 +29,8 @@ export default {
       default: () => {
         return {
           realName: '',
-          phone: ''
+          phone: '',
+          birthDay: ''
         }
       }
     }

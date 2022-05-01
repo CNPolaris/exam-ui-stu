@@ -9,7 +9,7 @@
 
         <el-col :span="16" :xs="24">
           <el-card>
-            <el-tabs active-name="timeline">
+            <el-tabs active-name="account">
               <el-tab-pane label="账号" name="account">
                 <account :user-info="userInfo" />
               </el-tab-pane>
@@ -31,6 +31,7 @@ import UserCard from './components/UserCard'
 import Account from './components/Account'
 import Password from '@/views/profile/components/Password'
 import { getInfo } from '@/api/user'
+import { formatDate } from '@/utils'
 
 export default {
   name: 'Profile',
@@ -43,6 +44,7 @@ export default {
         lastActiveTime: '',
         createTime: '',
         role: '1',
+        birthDay: '',
         avatar: null
       },
       loginLog: null
@@ -59,10 +61,18 @@ export default {
     this.getUser()
   },
   methods: {
+    formatDateTime(time) {
+      if (time == null || time === '') {
+        return 'N/A'
+      }
+      const date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd')
+    },
     getUser() {
       const _this = this
       getInfo().then(response => {
         _this.userInfo = response.data
+        _this.userInfo.birthDay = this.formatDateTime(response.data.birthDay)
       })
     }
   }
