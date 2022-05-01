@@ -459,6 +459,7 @@ export const constantRoutes = [
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
+  base: '/student/',
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
