@@ -1,5 +1,5 @@
 module.exports = {
-  title: '在线考试平台',
+  title: '在线考试平台学生端',
 
   /**
    * @type {boolean} true | false
