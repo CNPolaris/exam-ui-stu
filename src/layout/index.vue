@@ -3,17 +3,17 @@
     <el-header height="61" class="student-header">
       <div class="head-user">
         <el-dropdown trigger="click" placement="bottom">
-          <el-badge :is-dot="messageCount!==0">
+          <el-badge :is-dot="userInfo.messageCount!==0">
             <el-avatar class="el-dropdown-avatar" size="medium" :src="userInfo.avatar === null ? require('@/assets/avatar.png') : userInfo.avatar" />
           </el-badge>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="$router.push({path:'/profile/index'})">个人中心</el-dropdown-item>
             <el-dropdown-item @click.native="$router.push({path: '/profile/score/analysis'})">成绩分析</el-dropdown-item>
-            <el-dropdown-item @click.native="$router.push({path:'/user/message'})">
-              <el-badge v-if="messageCount!==0" :value="messageCount">
+            <el-dropdown-item @click.native="$router.push({path:'/profile/message/index'})">
+              <el-badge v-if="userInfo.messageCount!==0" :value="userInfo.messageCount">
                 <span>消息中心</span>
               </el-badge>
-              <span v-if="messageCount===0">消息中心</span>
+              <span v-if="userInfo.messageCount===0">消息中心</span>
             </el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出</el-dropdown-item>
           </el-dropdown-menu>
@@ -35,7 +35,7 @@
 
 <script>
 import ResizeMixin from './mixin/ResizeHandler'
-// import { getInfo } from '@/api/user'
+import { getInfo } from '@/api/user'
 
 export default {
   name: 'Layout',
@@ -44,7 +44,8 @@ export default {
     return {
       defaultUrl: '/',
       userInfo: {
-        avatar: null
+        avatar: null,
+        messageCount: 0
       },
       messageCount: 0
     }
@@ -60,10 +61,10 @@ export default {
   methods: {
     getUser() {
       const _this = this
-      // getInfo().then(response => {
-      //   _this.userInfo = response.data
-      // })
-      _this.userInfo.avatar = this.$store.getters.avatar
+      getInfo().then(response => {
+        _this.userInfo = response.data
+      })
+      // _this.userInfo.avatar = this.$store.getters.avatar
     },
     routeSelect(path) {
       const topPath = ['/', '/index', '/paper/index', '/record/index', '/question/index']
