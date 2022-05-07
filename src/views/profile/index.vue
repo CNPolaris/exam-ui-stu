@@ -2,12 +2,10 @@
   <div class="app-container">
     <div>
       <el-row :gutter="20">
-
-        <el-col :span="8" :xs="24">
+        <el-col :xs="12" :sm="12" :lg="8">
           <user-card :user-info="userInfo" />
         </el-col>
-
-        <el-col :span="16" :xs="24">
+        <el-col :xs="12" :sm="12" :lg="16">
           <el-card>
             <el-tabs active-name="account">
               <el-tab-pane label="账号" name="account">

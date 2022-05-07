@@ -54,6 +54,7 @@
       :total="total"
       :page.sync="queryParam.page"
       :limit.sync="queryParam.limit"
+      style="text-align: center"
       @pagination="search"
     />
   </div>

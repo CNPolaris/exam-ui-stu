@@ -1,10 +1,10 @@
 <template>
   <el-form>
     <el-form-item label="真实姓名">
-      <el-input v-model.trim="userInfo.realName" />
+      <el-input v-model.trim="userInfo.realName" style="width: 200px" />
     </el-form-item>
     <el-form-item label="手机号">
-      <el-input v-model.trim="userInfo.phone" />
+      <el-input v-model.trim="userInfo.phone" style="width: 200px" />
     </el-form-item>
     <el-form-item label="生日">
       <el-date-picker

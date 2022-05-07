@@ -1,17 +1,17 @@
 <template>
-  <div class="app-container">
-    <el-row style="border-top-width: 10px">
-      <el-col :span="2">
+  <div class="dashboard-container">
+    <el-row :gutter="20" style="border-top-width: 10px">
+      <el-col :xs="24" :sm="24" :lg="2">
         <div class="card-panel-description">
           <img :src="userInfo.avatar" style="height: 100px; width: 100px; border-radius: 40px" alt="头像">
         </div>
       </el-col>
-      <el-col :span="2">
+      <el-col :xs="24" :sm="24" :lg="2">
         <span>账号：{{ userInfo.userName }}</span><br>
         <span>姓名：{{ userInfo.realName }}</span>
       </el-col>
-      <el-col :span="20">
-        <el-row class="panel-group">
+      <el-col :xs="24" :sm="24" :lg="20">
+        <el-row :gutter="20" class="panel-group">
           <el-col :xs="6" :sm="6" :lg="4" class="card-panel-col">
             <div class="card-panel">
               <div class="card-panel-icon-wrapper">
@@ -93,13 +93,16 @@
         </el-row>
       </el-col>
     </el-row>
-    <el-row style="border-top-width: 10px">
-      <el-col :span="12">
+    <el-row :gutter="20" style="border-top-width: 10px">
+      <el-col :xs="24" :sm="24" :lg="12">
         <div class="chart-wrapper">
           <score-line-chart :score-line="scoreLine" />
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :sm="24" :lg="12">
+        <div class="chart-wrapper">
+          <score-rate-chart :score-line="scoreLine" />
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -111,8 +114,9 @@ import { getInfo } from '@/api/user'
 import { getStudentAnswerList } from '@/api/analysis'
 import { formatDate } from '@/utils'
 import ScoreLineChart from '@/views/exam/result/components/ScoreLineChart'
+import ScoreRateChart from '@/views/exam/result/components/ScoreRateChart'
 export default {
-  components: { CountTo, ScoreLineChart },
+  components: { CountTo, ScoreLineChart, ScoreRateChart },
   data() {
     return {
       id: null,
@@ -132,6 +136,7 @@ export default {
       scoreLine: {
         paperScore: [],
         userScore: [],
+        scoreRate: [],
         createTime: []
       },
       echartsScoreLineAction: null
@@ -173,6 +178,7 @@ export default {
       for (let i = 0; i < _this.answerList.length; i++) {
         _this.scoreLine.paperScore.push(_this.answerList[i].paperScore)
         _this.scoreLine.userScore.push(_this.answerList[i].userScore)
+        _this.scoreLine.scoreRate.push(Math.round(_this.answerList[i].userScore / _this.answerList[i].paperScore * 10000) / 100.00)
         _this.scoreLine.createTime.push(this.formatDateTime(_this.answerList[i].createTime))
         questionCount = questionCount + _this.answerList[i].questionCount
         correctCount = correctCount + _this.answerList[i].questionCorrect

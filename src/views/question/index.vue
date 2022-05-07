@@ -1,7 +1,7 @@
 <template>
-  <div style="margin-top: 10px" class="app-contain">
-    <el-row class="panel-group">
-      <el-col :lg="4" class="card-panel-col">
+  <div class="dashboard-container">
+    <el-row :gutter="20" class="panel-group">
+      <el-col :xs="12" :sm="12" :lg="4" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper">
             <svg-icon icon-class="single" class-name="card-panel-icon" />
@@ -14,7 +14,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :lg="4" class="card-panel-col">
+      <el-col :xs="12" :sm="12" :lg="4" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper">
             <svg-icon icon-class="multiple" class-name="card-panel-icon" />
@@ -27,7 +27,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :lg="4" class="card-panel-col">
+      <el-col :xs="12" :sm="12" :lg="4" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper">
             <svg-icon icon-class="truefalse" class-name="card-panel-icon" />
@@ -40,7 +40,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :lg="4" class="card-panel-col">
+      <el-col :xs="12" :sm="12" :lg="4" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper">
             <svg-icon icon-class="gap" class-name="card-panel-icon" />
@@ -53,7 +53,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :lg="4" class="card-panel-col">
+      <el-col :xs="12" :sm="12" :lg="4" class="card-panel-col">
         <div class="card-panel">
           <div class="card-panel-icon-wrapper">
             <svg-icon icon-class="short" class-name="card-panel-icon" />
@@ -67,8 +67,8 @@
         </div>
       </el-col>
     </el-row>
-    <el-row :gutter="50">
-      <el-col :span="24">
+    <el-row>
+      <el-col :xs="24" :sm="24" :lg="24">
         <el-table v-loading="listLoading" :data="tableData" fit highlight-current-row style="width: 100%">
           <el-table-column prop="shortTitle" label="题干" show-overflow-tooltip />
           <el-table-column prop="questionType" label="题型" :formatter="questionTypeFormatter" width="120" />
@@ -92,7 +92,7 @@
           :background="false"
           :page.sync="queryParam.page"
           :limit.sync="queryParam.limit"
-          style="margin-top: 20px"
+          style="text-align: center"
           @pagination="search"
         />
       </el-col>
