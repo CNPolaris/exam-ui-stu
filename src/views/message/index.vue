@@ -1,6 +1,6 @@
 <template>
   <div class="message-container">
-    <el-collapse v-for="(item, index) in list" :key="index" @change="handleRead(item.id)">
+    <el-collapse v-for="(item, index) in list" :key="index" @change="handleRead(item)">
       <el-collapse-item>
         <template slot="title">
           {{ item.title }}
@@ -56,10 +56,18 @@ export default {
         _this.total = re.data.total
       })
     },
-    handleRead(id) {
-      readMessage(id).then(re => {
-        console.log(re.data.message)
-      })
+    handleRead(item) {
+      if (item.readed === false) {
+        readMessage(item.id).then(re => {
+          if (re.code === 2000) {
+            this.$message({
+              message: re.message,
+              type: 'success'
+            })
+          }
+          this.getMessage()
+        })
+      }
     },
     statusTagFormatter(status) {
       if (status) {

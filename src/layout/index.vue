@@ -9,7 +9,7 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="$router.push({path:'/profile/index'})">个人中心</el-dropdown-item>
             <el-dropdown-item @click.native="$router.push({path: '/profile/score/analysis'})">成绩分析</el-dropdown-item>
-            <el-dropdown-item @click.native="$router.push({path:'/profile/message/index'})">
+            <el-dropdown-item @click.native="$router.push({path:'/message/index'})">
               <el-badge v-if="userInfo.messageCount!==0" :value="userInfo.messageCount">
                 <span>消息中心</span>
               </el-badge>

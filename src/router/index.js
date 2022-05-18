@@ -103,16 +103,16 @@ export const constantRoutes = [
         meta: {
           title: '成绩分析'
         }
-      },
-      {
-        path: '/message/index',
-        name: 'MessageIndex',
-        component: () => import('@/views/message/index'),
-        meta: {
-          title: '消息中心'
-        }
       }
     ]
+  },
+  {
+    path: '/message/index',
+    name: 'MessageIndex',
+    component: () => import('@/views/message/index'),
+    meta: {
+      title: '消息中心'
+    }
   },
   {
     path: '/paper',
