@@ -26,6 +26,12 @@
         <el-menu-item index="/question/index">错题本</el-menu-item>
         <el-menu-item index="/video/index">视频中心</el-menu-item>
       </el-menu>
+      <div style="margin-left: 100px">
+        <a href="/student/#/">
+          <img src="@/assets/logo.png" alt="图标" style="height: 56px">
+        </a>
+      </div>
+
     </el-header>
     <el-main class="student-main">
       <router-view />

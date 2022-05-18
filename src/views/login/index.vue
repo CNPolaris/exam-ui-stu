@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="login-container" :style="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
@@ -84,7 +84,14 @@ export default {
       loading: false,
       showDialog: false,
       redirect: undefined,
-      otherQuery: {}
+      otherQuery: {},
+      login: {
+        backgroundImage: 'url(' + require('../../assets/background.png') + ')',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        position: 'absolute',
+        width: '1920px'
+      }
     }
   },
   watch: {
@@ -207,7 +214,7 @@ $cursor: #fff;
 
 <style lang="scss" scoped>
 $bg:#2d3a4b;
-$dark_gray:#889aa4;
+$dark_gray: #020202;
 $light_gray:#eee;
 
 .login-container {
