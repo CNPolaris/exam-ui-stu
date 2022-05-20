@@ -51,13 +51,13 @@
             </el-card>
           </el-row>
           <el-row class="do-align-center">
-<!--            <el-popconfirm-->
-<!--              v-model="visible"-->
-<!--              title="是否确认交卷?"-->
-<!--              @onConfirm="submitForm"-->
-<!--            >-->
-<!---->
-<!--            </el-popconfirm>-->
+            <!--            <el-popconfirm-->
+            <!--              v-model="visible"-->
+            <!--              title="是否确认交卷?"-->
+            <!--              @onConfirm="submitForm"-->
+            <!--            >-->
+            <!---->
+            <!--            </el-popconfirm>-->
             <el-button type="primary" @click="submitForm">提交</el-button>
             <el-button>取消</el-button>
           </el-row>

@@ -18,7 +18,7 @@
     </el-form>
     <el-table v-loading="listLoading" :data="tableData" fit highlight-current-row style="width: 100%" @row-click="itemSelect">
       <el-table-column prop="id" label="序号" width="70px" align="center" />
-      <el-table-column prop="paperName" label="名称" width="350px" align="center" />
+      <el-table-column prop="paperName" label="名称" width="300px" align="center" />
       <el-table-column prop="subjectName" label="学科" width="100px" align="center" />
       <el-table-column prop="paperTypeStr" label="试卷类型" width="100px" align="center" />
       <el-table-column prop="questionCount" label="题目数量" width="100px" align="center" />
@@ -33,12 +33,12 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" label="提交时间" width="250px" align="center">
+      <el-table-column prop="createTime" label="提交时间" width="200px" align="center">
         <template slot-scope="{row}">
           {{ row.createTime|formatDateTime }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="250px">
+      <el-table-column align="center" label="操作" width="150px">
         <template slot-scope="{row}">
           <!--          <router-link v-if="row.status === 0 " target="_blank" :to="{path:'/answer/edit',query:{id:row.id}}">-->
           <!--            <el-button type="primary" size="small">批改</el-button>-->
