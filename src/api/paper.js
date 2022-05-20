@@ -55,9 +55,9 @@ export function answerSubmit(data) {
   })
 }
 
-export function setAnswer(data) {
+export function setAnswer(id, data) {
   return request({
-    url: '/student/exam/answer/set',
+    url: '/student/exam/answer/set/' + id,
     method: 'post',
     headers: {
       'Authorization': 'Bearer ' + getToken(),

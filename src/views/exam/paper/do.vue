@@ -143,7 +143,7 @@ export default {
       }
     },
     handleSetAnswer() {
-      setAnswer(this.answer).then(re => {
+      setAnswer(this.$route.query.id, this.answer).then(re => {
         this.$notify({
           title: '成功',
           message: re.message,
