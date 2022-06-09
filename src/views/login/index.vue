@@ -46,6 +46,7 @@
       </el-tooltip>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button type="text" size="small" @click="open" style="color: #020202">忘记密码？</el-button>
     </el-form>
   </div>
 </template>
@@ -151,6 +152,11 @@ export default {
           console.log('error submit!!')
           return false
         }
+      })
+    },
+    open() {
+      this.$alert('忘记密码请及时联系学校管理员', '忘记密码', {
+        confirmButtonText: '确定'
       })
     },
     getOtherQuery(query) {
